@@ -104,8 +104,8 @@ public class TopDownOrbitCamera : MonoBehaviour
     {
         // --- Orbit with A/D (Y axis) ---
         float horizontal = 0f;
-        if (Input.GetKey(KeyCode.A)) horizontal -= 1f;
-        if (Input.GetKey(KeyCode.D)) horizontal += 1f;
+        if (UnityEngine.Input.GetKey(KeyCode.A)) horizontal -= 1f;
+        if (UnityEngine.Input.GetKey(KeyCode.D)) horizontal += 1f;
 
         if (invertHorizontalOrbit)
             horizontal = -horizontal;
@@ -114,8 +114,8 @@ public class TopDownOrbitCamera : MonoBehaviour
 
         // --- Tilt with W/S (X axis) ---
         float vertical = 0f;
-        if (Input.GetKey(KeyCode.W)) vertical += 1f;
-        if (Input.GetKey(KeyCode.S)) vertical -= 1f;
+        if (UnityEngine.Input.GetKey(KeyCode.W)) vertical += 1f;
+        if (UnityEngine.Input.GetKey(KeyCode.S)) vertical -= 1f;
 
         if (invertVerticalTilt)
             vertical = -vertical;
@@ -130,8 +130,8 @@ public class TopDownOrbitCamera : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel"); // positive = forward
         float zoomInput = scroll;
 
-        if (Input.GetKey(KeyCode.Q)) zoomInput += 1f;
-        if (Input.GetKey(KeyCode.E)) zoomInput -= 1f;
+        if (UnityEngine.Input.GetKey(KeyCode.Q)) zoomInput += 1f;
+        if (UnityEngine.Input.GetKey(KeyCode.E)) zoomInput -= 1f;
 
         if (invertZoom)
             zoomInput = -zoomInput;
