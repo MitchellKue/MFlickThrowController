@@ -40,11 +40,11 @@ namespace FlickThrowSystem.Sampling
             samples.Add(new PointerSample(position, time));
         }
 
-        public (Vector2 velocity, float dragDistance, float duration)
+        public (Vector2 velocity, float dragDistance, float duration, float startTime, float endTime)
             CalculateWindowedVelocity(float window)
         {
             if (samples.Count < 2)
-                return (Vector2.zero, 0f, 0f);
+                return (Vector2.zero, 0f, 0f, 0f, 0f);
 
             PointerSample latest = samples[samples.Count - 1];
             float targetTime = latest.Time - window;
@@ -68,7 +68,13 @@ namespace FlickThrowSystem.Sampling
             float dragDistance = Vector2.Distance(pressPosition, latest.Position);
             float duration = latest.Time - pressTime;
 
-            return (velocity, dragDistance, duration);
+            return (
+                velocity,
+                dragDistance,
+                duration,
+                pressTime,
+                latest.Time
+                );
         }
     }
 }

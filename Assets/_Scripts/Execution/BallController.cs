@@ -12,13 +12,14 @@ namespace FlickThrowSystem.Execution
         {
            if (UnityEngine.Input.GetKeyDown(KeyCode.R))
            {
-               ballRigidbody.linearVelocity = Vector3.zero;
-               ballRigidbody.angularVelocity = Vector3.zero;
-           
-               GameObject g = ballRigidbody.gameObject;
-               Vector3 sp = startPosition.position;
-           
-               ballRigidbody.transform.position = startPosition.position;
+                ballRigidbody.linearVelocity = Vector3.zero;
+                ballRigidbody.angularVelocity = Vector3.zero;
+                
+                ballRigidbody.transform.position = startPosition.position;
+                if (ballRigidbody.transform.position != startPosition.position)
+                {
+                    ballRigidbody.transform.position = startPosition.position;
+                }
            }
         }
     }

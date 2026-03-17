@@ -26,8 +26,8 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_LightmapFlags: 1
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -119,8 +119,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Vector1_6155CAB: 0.25
-    - Vector1_85F6688: 0
+    - Vector1_6155CAB: 0.586
+    - Vector1_85F6688: 0.677
     - Vector1_86173aaa32784b6ca679699aec9cf972: 0.25
     - Vector1_abcf869385904f98930cb9f1ade0a500: 0
     - _AlphaClip: 0

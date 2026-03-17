@@ -35,9 +35,12 @@ namespace FlickThrowSystem.Analysis
         public AnalyzedFlick Analyze(
             Vector2 rawVelocity,
             float dragDistance,
-            float duration)
+            float duration,
+            float screenHeight,
+            float startTime,
+            float endTime)
         {
-            Vector2 normalized = rawVelocity / Screen.height;
+            Vector2 normalized = rawVelocity / screenHeight;
 
             return new AnalyzedFlick
             {
@@ -46,7 +49,9 @@ namespace FlickThrowSystem.Analysis
                 ForwardComponent = normalized.y,
                 HorizontalComponent = normalized.x,
                 DragDistance = dragDistance,
-                Duration = duration
+                Duration = duration,
+                StartTime = startTime,
+                EndTime = endTime
             };
         }
     }

@@ -46,6 +46,7 @@ namespace FlickThrowSystem.Execution
         private IPointerInputSource inputSource;
 
         private bool isSampling;
+        private float cachedScreenHeight;
 
         // --------------------------------------------------------
         // 1. Initialization
@@ -53,6 +54,8 @@ namespace FlickThrowSystem.Execution
 
         private void Awake()
         {
+            cachedScreenHeight = Screen.height;
+
             ApplyInputType(currentInputType);
 
             sampler = new PointerSampler();
@@ -64,6 +67,12 @@ namespace FlickThrowSystem.Execution
                 mappingSettings,
                 userTuning,
                 true); // enable runtime debug lines
+        }
+
+        private void OnEnable()
+        {
+            cachedScreenHeight = Screen.height;
+
         }
 
         // --------------------------------------------------------
@@ -133,9 +142,12 @@ namespace FlickThrowSystem.Execution
 
             var analyzed =
                 analyzer.Analyze(
-                    resultData.velocity,
-                    resultData.dragDistance,
-                    resultData.duration);
+                resultData.velocity,
+                resultData.dragDistance,
+                resultData.duration,
+                cachedScreenHeight,
+                resultData.startTime,
+                resultData.endTime);
 
             LastFlickResult =
                 validator.Validate(analyzed);

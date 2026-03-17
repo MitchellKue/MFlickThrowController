@@ -1540,13 +1540,13 @@ MonoBehaviour:
   ballRigidbody: {fileID: 1506354633}
   cameraTransform: {fileID: 95811355}
   flickSettings:
-    velocityWindow: 0.8
+    velocityWindow: 0.3
     minDragDistance: 300
-    maxDragDistance: 3000
-    minReleaseSpeed: 10
+    maxDragDistance: 800
+    minReleaseSpeed: 5
     fallbackForce: 3
-    minForwardDot: 0
-    horizontalDeviationThreshold: 0
+    minForwardDot: 0.181
+    horizontalDeviationThreshold: 0.1
     spinThreshold: 0
     diagonalPowerReductionThreshold: 0.7
     diagonalPowerCurve:
@@ -1574,11 +1574,11 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   mappingSettings:
-    maxYawAngle: 20
-    basePowerMultiplier: 2
-    rollSpinMultiplier: 0
-    curveSpinMultiplier: 50
-    spinActivationThreshold: 50
+    maxYawAngle: 30
+    basePowerMultiplier: 5
+    rollSpinMultiplier: 1
+    curveSpinMultiplier: 0
+    spinActivationThreshold: 5000
   userTuning:
     powerSensitivity: 3
     angleSensitivity: 3
@@ -2101,6 +2101,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595706476886152322, guid: 1bb9a0fe17b4ce04088a50e954a85895, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6815052576287066323, guid: 1bb9a0fe17b4ce04088a50e954a85895, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6815052576287066323, guid: 1bb9a0fe17b4ce04088a50e954a85895, type: 3}
+      propertyPath: m_AngularDrag
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8497653208078802013, guid: 1bb9a0fe17b4ce04088a50e954a85895, type: 3}
