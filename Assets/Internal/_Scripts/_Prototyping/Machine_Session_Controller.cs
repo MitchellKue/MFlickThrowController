@@ -8,7 +8,7 @@ using TMPro;
 /// Keeps track of current turns and a max turn value,
 /// and directly updates some UI elements.
 /// </summary>
-public class ProtoTurnSystem : MonoBehaviour
+public class Machine_Session_Controller : MonoBehaviour
 {
     [Header("Turn Settings")]
     [Tooltip("Maximum number of turns for this context (e.g., per game).")]

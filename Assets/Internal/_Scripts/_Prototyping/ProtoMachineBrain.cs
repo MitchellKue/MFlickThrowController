@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class ProtoMachineBrain : MonoBehaviour
 {
-    public ProtoScoreSystem scoreSystem;
-    public ProtoTicketGenerator ticketGenerator;
-    public ProtoTurnSystem turnSystem;
+    public Machine_Score_Controller scoreSystem;
+    public Machine_Ticket_Controller ticketGenerator;
+    public Machine_Session_Controller turnSystem;
 
     private bool dispensedTickets = true;
 
     private void Awake()
     {
-        if (scoreSystem == null) scoreSystem = GetComponent<ProtoScoreSystem>();
-        if (ticketGenerator == null) ticketGenerator = GetComponent<ProtoTicketGenerator>();
-        if (turnSystem == null) turnSystem = GetComponent<ProtoTurnSystem>();
+        if (scoreSystem == null) scoreSystem = GetComponent<Machine_Score_Controller>();
+        if (ticketGenerator == null) ticketGenerator = GetComponent<Machine_Ticket_Controller>();
+        if (turnSystem == null) turnSystem = GetComponent<Machine_Session_Controller>();
 
         // Subscribe to turn events
         if (turnSystem != null)

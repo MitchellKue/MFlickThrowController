@@ -7,7 +7,7 @@ using UnityEngine;
 /// calculator to determine how many tickets to spawn, and then
 /// spawns them over time with some random force.
 /// </summary>
-public class ProtoTicketGenerator : MonoBehaviour
+public class Machine_Ticket_Controller : MonoBehaviour
 {
     [Header("Ticket Prefab & Spawn")]
     [Tooltip("The ticket prefab that will be instantiated.")]

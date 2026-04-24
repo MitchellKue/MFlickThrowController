@@ -6,7 +6,7 @@ using UnityEngine;
 /// Acts as the score system for a single arcade machine.
 /// Handles score logic, UI, and SFX for score changes.
 /// </summary>
-public class ProtoScoreSystem : MonoBehaviour
+public class Machine_Score_Controller : MonoBehaviour
 {
     #region AUDIO
 

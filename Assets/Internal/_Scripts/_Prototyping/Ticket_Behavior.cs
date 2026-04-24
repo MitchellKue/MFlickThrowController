@@ -6,7 +6,7 @@ using UnityEngine;
 /// - Optionally has a chance to be destroyed when it first hits something,
 ///   except against layers you choose to ignore.
 /// </summary>
-public class ProtoTicketBehavior : MonoBehaviour
+public class Ticket_Behavior : MonoBehaviour
 {
     [Header("Lifetime")]
     [Tooltip("Seconds before this ticket is destroyed regardless of anything else.")]
