@@ -1,11 +1,12 @@
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Generic turn-tracking system.
 /// Keeps track of current turns and a max turn value,
-/// and provides methods to add/remove/reset.
+/// and directly updates some UI elements.
 /// </summary>
 public class ProtoTurnSystem : MonoBehaviour
 {
@@ -13,11 +14,22 @@ public class ProtoTurnSystem : MonoBehaviour
     [Tooltip("Maximum number of turns for this context (e.g., per game).")]
     public int maxTurns = 3;
 
+    
+
+    [Header("Hard-Wired UI")]
+    [Tooltip("Label to display turns as 'current / max'.")]
+    public TextMeshProUGUI turnsText;
+
+    [Tooltip("Optional slider to visualize turns (0-1 normalized).")]
+    public Slider turnsSlider;
+
+    [Tooltip("Optional image fill (e.g., radial / bar) to visualize turns (0-1).")]
+    public Image turnsFillImage;
+
     [SerializeField]
-    [ReadOnly(true)]
     private int currentTurns;
 
-    [Header("Events")]
+    [Header("Events (Optional)")]
     public UnityEvent<int, int> OnTurnsChanged;      // (current, max)
     public UnityEvent OnTurnsDepleted;              // Called when turns reach 0
 
@@ -105,6 +117,37 @@ public class ProtoTurnSystem : MonoBehaviour
 
     private void InvokeTurnsChanged()
     {
+        // Fire events (if anything still listens)
         OnTurnsChanged?.Invoke(currentTurns, maxTurns);
+
+        // Update hard-wired UI
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        // Text: "current / max"
+        if (turnsText != null)
+        {
+            turnsText.text = $"{currentTurns} / {maxTurns}";
+        }
+
+        // Normalized value (avoid div by zero)
+        float normalized = (maxTurns > 0) ? (float)currentTurns / maxTurns : 0f;
+
+        // Slider
+        if (turnsSlider != null)
+        {
+            turnsSlider.minValue = 0f;
+            turnsSlider.maxValue = 1f;
+            turnsSlider.value = normalized;
+        }
+
+        // Image fill
+        if (turnsFillImage != null)
+        {
+            // Assumes Image.type = Filled
+            turnsFillImage.fillAmount = normalized;
+        }
     }
 }

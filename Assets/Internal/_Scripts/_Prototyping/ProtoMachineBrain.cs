@@ -28,8 +28,8 @@ public class ProtoMachineBrain : MonoBehaviour
         turnSystem?.ResetTurnsToMax();
 
         dispensedTickets = false;
+        // add start up sfx
     }
-
 
     [ContextMenu("Use a turn")]
     public void OnPlayerUsedTurn()
@@ -37,21 +37,44 @@ public class ProtoMachineBrain : MonoBehaviour
         turnSystem?.ConsumeTurn();
     }
 
-
     [ContextMenu("Force Session Over")]
     private void HandleSessionOver()
     {
         int finalScore = scoreSystem != null ? scoreSystem.CurrentScoreValue : 0;
 
-        // handlet tickets dispenssing
-        if (dispensedTickets == false)
+        if (!dispensedTickets)
         {
-            ticketGenerator?.GenerateTicketsFromScore(finalScore);
+            int ticketCount = 0;
 
-            // let system know tickets were dispensed already
+            // Use the same calculator that the ticket generator uses
+            if (ProtoTicketCalculator.Instance != null)
+            {
+                ticketCount = ProtoTicketCalculator.Instance.CalculateConversion(finalScore);
+            }
+            else
+            {
+                Debug.LogWarning("No ProtoTicketCalculator instance found. Cannot compute ticketCount from score.");
+            }
+
+            // Physically spawn tickets
+            if (ticketGenerator != null && ticketCount > 0)
+            {
+                ticketGenerator.GenerateTickets(ticketCount);
+            }
+
+            // Add tickets to player wallet
+            if (PlayerWallet.Instance != null && ticketCount > 0)
+            {
+                PlayerWallet.Instance.AddTickets(ticketCount);
+            }
+            else if (PlayerWallet.Instance == null)
+            {
+                Debug.LogWarning("No PlayerWallet instance found. Tickets will not be stored.");
+            }
+
             dispensedTickets = true;
         }
 
-        
+        // add session over sfx
     }
 }
