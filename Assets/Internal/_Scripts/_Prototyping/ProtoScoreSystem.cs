@@ -19,6 +19,11 @@ public class ProtoScoreSystem : MonoBehaviour
     [SerializeField][ReadOnly(true)] private int currentScoreValue;
 
     /// <summary>
+    /// Current score value for this machine (read-only).
+    /// </summary>
+    public int CurrentScoreValue => currentScoreValue;
+
+    /// <summary>
     /// adds the specified amount of score
     /// </summary>
     /// <param name="amount"> the amount of score to add</param>
