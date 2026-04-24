@@ -143,7 +143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Roguelike card selection
+  m_text: Select A Card
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -250,7 +250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 385}
+  m_AnchoredPosition: {x: 0, y: 378}
   m_SizeDelta: {x: -1222.8545, y: -1020.0397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9069030796753596004
@@ -328,7 +328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -17, y: -468}
+  m_AnchoredPosition: {x: -17, y: -343}
   m_SizeDelta: {x: -615.6226, y: -982.6288}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5337145257120374050
@@ -423,17 +423,17 @@ RectTransform:
   m_GameObject: {fileID: 8405477824017240279}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1323382644828948042}
-  - {fileID: 5864007778052442235}
-  - {fileID: 1906932959276251899}
+  - {fileID: 3255770126782264377}
+  - {fileID: 7688334438876519482}
   m_Father: {fileID: 527136586906714439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -79.799194}
+  m_AnchoredPosition: {x: 0, y: -8}
   m_SizeDelta: {x: -0.00024414, y: -422.0016}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4553220056710973597
@@ -492,8 +492,8 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -146.1
-  m_ChildForceExpandWidth: 1
+  m_Spacing: 23.8
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
@@ -534,11 +534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 510.6167
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 657.9984
+      value: 650
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -588,6 +588,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3757881880029436953, guid: bcc637e6a298e334694d336d2616713b, type: 3}
+      propertyPath: m_fontSize
+      value: 20.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5442976572262919543, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_Name
       value: Card
@@ -602,7 +606,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
   m_PrefabInstance: {fileID: 1572169813696341811}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2160083986982968194
+--- !u!1001 &3072070893236344128
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -636,11 +640,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 510.6167
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 657.9984
+      value: 650
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -690,6 +694,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3757881880029436953, guid: bcc637e6a298e334694d336d2616713b, type: 3}
+      propertyPath: m_fontSize
+      value: 20.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5442976572262919543, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_Name
       value: Card (1)
@@ -699,10 +707,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcc637e6a298e334694d336d2616713b, type: 3}
---- !u!224 &1906932959276251899 stripped
+--- !u!224 &3255770126782264377 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
-  m_PrefabInstance: {fileID: 2160083986982968194}
+  m_PrefabInstance: {fileID: 3072070893236344128}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3555871315431517327
 PrefabInstance:
@@ -712,6 +720,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1633922860919070242}
     m_Modifications:
+    - target: {fileID: 1270530783224400886, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
+      propertyPath: m_text
+      value: ReRoll Cards
+      objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -738,11 +750,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 270.6
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 97.371216
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -814,6 +826,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1633922860919070242}
     m_Modifications:
+    - target: {fileID: 1270530783224400886, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
+      propertyPath: m_text
+      value: Cancel Selection
+      objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -840,11 +856,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 270.6
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 97.371216
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -908,7 +924,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4514472950622203095, guid: 98c9e251eccfc684eb8730f3fe9d07d2, type: 3}
   m_PrefabInstance: {fileID: 5997372175370559193}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6263879930614229250
+--- !u!1001 &7871890746883128643
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -942,11 +958,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 510.6167
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 657.9984
+      value: 650
       objectReference: {fileID: 0}
     - target: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -996,6 +1012,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3757881880029436953, guid: bcc637e6a298e334694d336d2616713b, type: 3}
+      propertyPath: m_fontSize
+      value: 20.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5442976572262919543, guid: bcc637e6a298e334694d336d2616713b, type: 3}
       propertyPath: m_Name
       value: Card (2)
@@ -1005,8 +1025,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcc637e6a298e334694d336d2616713b, type: 3}
---- !u!224 &5864007778052442235 stripped
+--- !u!224 &7688334438876519482 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 544057720924545401, guid: bcc637e6a298e334694d336d2616713b, type: 3}
-  m_PrefabInstance: {fileID: 6263879930614229250}
+  m_PrefabInstance: {fileID: 7871890746883128643}
   m_PrefabAsset: {fileID: 0}

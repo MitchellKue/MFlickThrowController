@@ -1,12 +1,17 @@
 using UnityEngine;
 
-public class ProtoMachineBrain : MonoBehaviour
+public class Machine_Brain_Controller : MonoBehaviour
 {
     public Machine_Score_Controller scoreSystem;
     public Machine_Ticket_Controller ticketGenerator;
     public Machine_Session_Controller turnSystem;
 
     private bool dispensedTickets = true;
+
+    private void Start()
+    {
+        StartNewSession();
+    }
 
     private void Awake()
     {
@@ -35,6 +40,11 @@ public class ProtoMachineBrain : MonoBehaviour
     public void OnPlayerUsedTurn()
     {
         turnSystem?.ConsumeTurn();
+
+        // temporary test. show rogulike system after each successful turn
+        RoguelikeCardManager.Instance.RequestRoguelikeScreen();
+
+        scoreSystem.TestAddRandomScore();
     }
 
     [ContextMenu("Force Session Over")]
@@ -44,12 +54,13 @@ public class ProtoMachineBrain : MonoBehaviour
 
         if (!dispensedTickets)
         {
+            Debug.Log("dispensing tickets");
             int ticketCount = 0;
 
             // Use the same calculator that the ticket generator uses
-            if (ProtoTicketCalculator.Instance != null)
+            if (Economy_TicketCalculator.Instance != null)
             {
-                ticketCount = ProtoTicketCalculator.Instance.CalculateConversion(finalScore);
+                ticketCount = Economy_TicketCalculator.Instance.CalculateConversion(finalScore);
             }
             else
             {

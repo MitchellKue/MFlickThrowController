@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Handles player interaction with nearby ProtoMachineInteractable machines.
 /// </summary>
-public class PlayerMachineInteractionController : MonoBehaviour
+public class Player_Machine_InteractionController : MonoBehaviour
 {
     [Header("Detection")]
     [Tooltip("How far to check for machines.")]
@@ -26,12 +26,12 @@ public class PlayerMachineInteractionController : MonoBehaviour
     /// The closest machine currently in range (and not occupied), or null.
     /// Use this to drive UI prompts.
     /// </summary>
-    public ProtoMachineInteractable CurrentMachineInRange { get; private set; }
+    public Machine_Interaction_Controller CurrentMachineInRange { get; private set; }
 
     /// <summary>
     /// Machine the player is currently occupying, or null.
     /// </summary>
-    public ProtoMachineInteractable OccupiedMachine { get; private set; }
+    public Machine_Interaction_Controller OccupiedMachine { get; private set; }
 
     private float _checkTimer = 0f;
 
@@ -60,13 +60,13 @@ public class PlayerMachineInteractionController : MonoBehaviour
         // Find colliders in radius
         Collider[] hits = Physics.OverlapSphere(origin, detectionRadius, machineLayerMask, QueryTriggerInteraction.Collide);
 
-        ProtoMachineInteractable previousMachine = CurrentMachineInRange;
-        ProtoMachineInteractable closestMachine = null;
+        Machine_Interaction_Controller previousMachine = CurrentMachineInRange;
+        Machine_Interaction_Controller closestMachine = null;
         float closestSqrDist = Mathf.Infinity;
 
         foreach (var hit in hits)
         {
-            ProtoMachineInteractable machine = hit.GetComponentInParent<ProtoMachineInteractable>();
+            Machine_Interaction_Controller machine = hit.GetComponentInParent<Machine_Interaction_Controller>();
             if (machine == null)
                 continue;
 

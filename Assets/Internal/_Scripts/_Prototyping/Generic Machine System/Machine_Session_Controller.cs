@@ -89,6 +89,7 @@ public class Machine_Session_Controller : MonoBehaviour
     public bool ConsumeTurn()
     {
         return ConsumeTurns(1);
+
     }
 
     /// <summary>

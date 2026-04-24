@@ -69,13 +69,13 @@ public class Machine_Ticket_Controller : MonoBehaviour
     /// <param name="machineScore">Final score from this machine.</param>
     public void GenerateTicketsFromScore(int machineScore)
     {
-        if (ProtoTicketCalculator.Instance == null)
+        if (Economy_TicketCalculator.Instance == null)
         {
             Debug.LogWarning("No ProtoTicketCalculator instance found. Cannot generate tickets from score.");
             return;
         }
 
-        int ticketCount = ProtoTicketCalculator.Instance.CalculateConversion(machineScore);
+        int ticketCount = Economy_TicketCalculator.Instance.CalculateConversion(machineScore);
         GenerateTickets(ticketCount);
     }
 

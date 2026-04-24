@@ -4,10 +4,10 @@ using UnityEngine;
 /// Provides a base for how score is converted into ticket value.
 /// This is implemented as a singleton.
 /// </summary>
-public class ProtoTicketCalculator : MonoBehaviour
+public class Economy_TicketCalculator : MonoBehaviour
 {
     // Static instance
-    public static ProtoTicketCalculator Instance { get; private set; }
+    public static Economy_TicketCalculator Instance { get; private set; }
 
     [Header("Ticket Conversion")]
     [Tooltip("Number of tickets awarded per point of machine score.")]
@@ -19,7 +19,7 @@ public class ProtoTicketCalculator : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Debug.LogWarning(
-                $"Duplicate {nameof(ProtoTicketCalculator)} found on {gameObject.name}. " +
+                $"Duplicate {nameof(Economy_TicketCalculator)} found on {gameObject.name}. " +
                 "Destroying this instance.");
             Destroy(gameObject);
             return;

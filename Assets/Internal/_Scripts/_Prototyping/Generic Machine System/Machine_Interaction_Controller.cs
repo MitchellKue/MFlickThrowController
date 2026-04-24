@@ -6,7 +6,7 @@ using UnityEngine;
 /// Represents an interactable machine in the world.
 /// Handles occupying / releasing the local player.
 /// </summary>
-public class ProtoMachineInteractable : MonoBehaviour
+public class Machine_Interaction_Controller : MonoBehaviour
 {
     [Header("Machine State")]
     [Tooltip("True if a player is currently using this machine.")]

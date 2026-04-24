@@ -1,12 +1,7 @@
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-/// <summary>
-/// Simple UI component for a single roguelike card.
-/// Displays BuffData and notifies the manager when clicked.
-/// </summary>
 public class RoguelikeCardView : MonoBehaviour
 {
     [Header("UI")]
@@ -19,14 +14,13 @@ public class RoguelikeCardView : MonoBehaviour
     [HideInInspector]
     public BuffData boundBuff;
 
+    // Assigned by the manager when it instantiates the card
     public System.Action<RoguelikeCardView> onClicked;
 
     private void Awake()
     {
         if (button != null)
-        {
             button.onClick.AddListener(HandleClick);
-        }
     }
 
     public void Bind(BuffData buff)
@@ -49,7 +43,6 @@ public class RoguelikeCardView : MonoBehaviour
 
     public void SetFocused(bool focused)
     {
-        // Very simple MVP: scale up when focused.
         transform.localScale = focused ? Vector3.one * 1.1f : Vector3.one;
     }
 

@@ -4,54 +4,52 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-/// <summary>
-/// Global manager for showing a simple roguelike buff selection screen.
-/// - Randomizes 3 BuffData cards from a list
-/// - Handles click selection, reroll, skip
-/// - Auto-selects if timer expires
-/// - Fires events for open/close and selection
-/// - Ignores extra calls while active
-/// </summary>
 public class RoguelikeCardManager : MonoBehaviour
 {
     public static RoguelikeCardManager Instance { get; private set; }
 
     [Header("Buff Database")]
-    [Tooltip("All available global buffs for random selection.")]
     public List<BuffData> allBuffs = new List<BuffData>();
 
-    [Header("UI Root")]
-    [Tooltip("Root canvas/panel for the roguelike screen.")]
+    [Header("Screen Root")]
+    [Tooltip("Root object for the roguelike UI. This whole object will be enabled/disabled.")]
     public GameObject screenRoot;
 
-    [Tooltip("Three card views used to display random buffs.")]
-    public RoguelikeCardView[] cardViews = new RoguelikeCardView[3];
+    [Header("Card Setup")]
+    [Tooltip("Parent transform where card prefabs will be instantiated (has HorizontalLayoutGroup, etc).")]
+    public Transform cardRoot;
+
+    [Tooltip("Card prefab that has RoguelikeCardView on it.")]
+    public RoguelikeCardView cardPrefab;
+
+    [Tooltip("How many cards to show (MVP = 3).")]
+    public int cardCount = 3;
 
     [Header("Buttons")]
     public Button rerollButton;
     public Button skipButton;
 
     [Header("Timing")]
-    [Tooltip("How long the player has to pick a card before auto-select (seconds).")]
     public float selectionTimeoutSeconds = 10f;
-
-    [Tooltip("How long to focus on selected card before closing (seconds).")]
     public float focusDurationSeconds = 2f;
 
     [Header("Events (hooks for machines)")]
     public UnityEvent OnRoguelikeScreenOpened;
     public UnityEvent OnRoguelikeScreenClosed;
 
-    /// <summary>
-    /// Called when a buff is chosen (either by click, auto-select, or reroll + click).
-    /// </summary>
     [System.Serializable]
     public class BuffSelectedEvent : UnityEvent<BuffData> { }
     public BuffSelectedEvent OnBuffSelected;
 
-    private bool _isScreenActive;
-    private Coroutine _activeRoutine;
-    private BuffData[] _currentBuffChoices = new BuffData[3];
+    private bool _isActive;
+    private Coroutine _flowRoutine;
+
+    private readonly List<RoguelikeCardView> _spawnedCards = new List<RoguelikeCardView>();
+    private readonly List<BuffData> _currentBuffs = new List<BuffData>();
+
+    private BuffData _selectedBuff;
+    private RoguelikeCardView _selectedCardView;
+    private bool _skipRequested;
 
     private void Awake()
     {
@@ -60,19 +58,11 @@ public class RoguelikeCardManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         if (screenRoot != null)
             screenRoot.SetActive(false);
 
-        SetupButtons();
-        SetupCardClickHandlers();
-    }
-
-    private void SetupButtons()
-    {
         if (rerollButton != null)
             rerollButton.onClick.AddListener(HandleRerollClicked);
 
@@ -80,24 +70,11 @@ public class RoguelikeCardManager : MonoBehaviour
             skipButton.onClick.AddListener(HandleSkipClicked);
     }
 
-    private void SetupCardClickHandlers()
-    {
-        foreach (var view in cardViews)
-        {
-            if (view == null) continue;
-            view.onClicked = HandleCardClicked;
-        }
-    }
-
     // --- PUBLIC API ---
-
-    /// <summary>
-    /// Called by machines to show the roguelike buff selection screen.
-    /// Simple MVP: ignores call if a screen is already active.
-    /// </summary>
+    [ContextMenu("Request Roguelike Selection Screen")]
     public void RequestRoguelikeScreen()
     {
-        if (_isScreenActive)
+        if (_isActive)
             return;
 
         if (allBuffs == null || allBuffs.Count == 0)
@@ -106,182 +83,169 @@ public class RoguelikeCardManager : MonoBehaviour
             return;
         }
 
-        _activeRoutine = StartCoroutine(RunRoguelikeFlow());
+        _flowRoutine = StartCoroutine(RunFlow());
     }
 
-    // --- FLOW ---
+    // --- MAIN FLOW ---
 
-    private IEnumerator RunRoguelikeFlow()
+    private IEnumerator RunFlow()
     {
-        _isScreenActive = true;
+        _isActive = true;
+        _selectedBuff = null;
+        _selectedCardView = null;
+        _skipRequested = false;
 
         if (screenRoot != null)
             screenRoot.SetActive(true);
 
         OnRoguelikeScreenOpened?.Invoke();
 
-        // Randomize 3 cards and show them
-        RollNewCards();
-
-        // Selection phase
-        BuffData selectedBuff = null;
-        RoguelikeCardView selectedView = null;
+        SpawnCards();
+        RollNewBuffsAndBind();
 
         float elapsed = 0f;
 
-        // Wait for user to pick, skip, or timeout
-        while (selectedBuff == null && elapsed < selectionTimeoutSeconds)
+        // Wait for selection, skip, or timeout
+        while (!_skipRequested && _selectedBuff == null && elapsed < selectionTimeoutSeconds)
         {
-            // selection and skip are driven by UI callbacks that set selectedBuff / selectedView
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        // If still nothing selected (no click, no skip), auto-pick a random card
-        if (selectedBuff == null)
+        // If skip pressed: close immediately with no buff
+        if (_skipRequested)
         {
-            int idx = Random.Range(0, _currentBuffChoices.Length);
-            selectedBuff = _currentBuffChoices[idx];
-            selectedView = cardViews[idx];
+            CloseScreen();
+            yield break;
         }
 
-        // Focus on selected card (if not a skip)
-        if (selectedBuff != null)
+        // If still nothing selected at timeout, auto-pick a random one
+        if (_selectedBuff == null && _currentBuffs.Count > 0)
         {
-            FocusOnSelectedCard(selectedView);
-
-            // Let systems know what was chosen (even if we're not using it yet)
-            OnBuffSelected?.Invoke(selectedBuff);
+            int index = Random.Range(0, _currentBuffs.Count);
+            _selectedBuff = _currentBuffs[index];
+            _selectedCardView = _spawnedCards[index];
         }
 
-        // Wait focus duration
+        // Focus and event (if we have a selected buff)
+        if (_selectedBuff != null && _selectedCardView != null)
+        {
+            FocusOnCard(_selectedCardView);
+            OnBuffSelected?.Invoke(_selectedBuff);
+        }
+
         if (focusDurationSeconds > 0f)
             yield return new WaitForSeconds(focusDurationSeconds);
 
-        // Close screen
+        CloseScreen();
+    }
+
+    private void CloseScreen()
+    {
+        ClearCardFocus();
+
         if (screenRoot != null)
             screenRoot.SetActive(false);
 
-        // Reset states
-        ClearCardFocus();
-        _isScreenActive = false;
-        _activeRoutine = null;
+        _isActive = false;
+        _flowRoutine = null;
 
         OnRoguelikeScreenClosed?.Invoke();
     }
 
-    // --- Randomization / UI ---
+    // --- CARD SPAWNING / BINDING ---
 
-    private void RollNewCards()
+    private void SpawnCards()
     {
-        if (allBuffs == null || allBuffs.Count == 0)
+        // Only spawn once for MVP; reuse if already present
+        if (_spawnedCards.Count > 0)
             return;
 
-        for (int i = 0; i < cardViews.Length; i++)
+        if (cardRoot == null || cardPrefab == null)
         {
-            BuffData randomBuff = allBuffs[Random.Range(0, allBuffs.Count)];
-            _currentBuffChoices[i] = randomBuff;
+            Debug.LogWarning("[RoguelikeCardManager] cardRoot or cardPrefab not set.");
+            return;
+        }
 
-            if (cardViews[i] != null)
-            {
-                cardViews[i].Bind(randomBuff);
-                cardViews[i].SetFocused(false);
-                cardViews[i].gameObject.SetActive(true);
-            }
+        _spawnedCards.Clear();
+
+        for (int i = 0; i < cardCount; i++)
+        {
+            var cardInstance = Instantiate(cardPrefab, cardRoot);
+            cardInstance.onClicked = HandleCardClicked;
+            cardInstance.SetFocused(false);
+            _spawnedCards.Add(cardInstance);
         }
     }
 
-    private void FocusOnSelectedCard(RoguelikeCardView selectedView)
+    private void RollNewBuffsAndBind()
     {
-        for (int i = 0; i < cardViews.Length; i++)
-        {
-            var view = cardViews[i];
-            if (view == null) continue;
+        _currentBuffs.Clear();
 
-            bool isSelected = (view == selectedView);
-            view.SetFocused(isSelected);
-            view.gameObject.SetActive(isSelected);
+        if (allBuffs == null || allBuffs.Count == 0)
+            return;
+
+        for (int i = 0; i < _spawnedCards.Count; i++)
+        {
+            BuffData randomBuff = allBuffs[Random.Range(0, allBuffs.Count)];
+            _currentBuffs.Add(randomBuff);
+
+            _spawnedCards[i].Bind(randomBuff);
+            _spawnedCards[i].SetFocused(false);
+            _spawnedCards[i].gameObject.SetActive(true);
+        }
+    }
+
+    private void FocusOnCard(RoguelikeCardView selected)
+    {
+        foreach (var card in _spawnedCards)
+        {
+            if (card == null) continue;
+
+            bool isSelected = (card == selected);
+            card.SetFocused(isSelected);
+            card.gameObject.SetActive(isSelected);
         }
     }
 
     private void ClearCardFocus()
     {
-        foreach (var view in cardViews)
+        foreach (var card in _spawnedCards)
         {
-            if (view == null) continue;
-            view.SetFocused(false);
-            view.gameObject.SetActive(true);
+            if (card == null) continue;
+            card.SetFocused(false);
+            card.gameObject.SetActive(true);
         }
     }
 
-    // --- UI Callbacks ---
+    // --- UI CALLBACKS ---
 
     private void HandleCardClicked(RoguelikeCardView view)
     {
-        if (!_isScreenActive) return;
+        if (!_isActive) return;
         if (view == null || view.boundBuff == null) return;
 
-        // Immediately lock in selection and end selection phase
-        // by jumping the timer in the coroutine via direct selection.
-        // Implementation: store it and end selection loop by
-        // "short-circuiting" via a helper.
-        StartCoroutine(SelectAndEndFlow(view.boundBuff, view));
-    }
+        // Lock in selection
+        _selectedBuff = view.boundBuff;
+        _selectedCardView = view;
 
-    private IEnumerator SelectAndEndFlow(BuffData buff, RoguelikeCardView view)
-    {
-        // If we're already mid-flow, just set state, the main
-        // coroutine will read it on next frame.
-        // Simpler: stop current flow and restart focus+close manually.
-        if (_activeRoutine != null)
-        {
-            StopCoroutine(_activeRoutine);
-        }
-
-        _activeRoutine = null;
-
-        _isScreenActive = true; // still active until we close
-
-        // Focus, event, wait, close
-        FocusOnSelectedCard(view);
-        OnBuffSelected?.Invoke(buff);
-
-        if (focusDurationSeconds > 0f)
-            yield return new WaitForSeconds(focusDurationSeconds);
-
-        if (screenRoot != null)
-            screenRoot.SetActive(false);
-
-        ClearCardFocus();
-        _isScreenActive = false;
-
-        OnRoguelikeScreenClosed?.Invoke();
+        // Let the coroutine handle the rest (focus + close)
     }
 
     private void HandleRerollClicked()
     {
-        if (!_isScreenActive) return;
-        RollNewCards();
+        if (!_isActive) return;
+        RollNewBuffsAndBind();
+
+        // Reset any previous selection
+        _selectedBuff = null;
+        _selectedCardView = null;
+        ClearCardFocus();
     }
 
     private void HandleSkipClicked()
     {
-        if (!_isScreenActive) return;
-
-        // Treat skip as "no buff selected":
-        // Close immediately without a focused card.
-        if (_activeRoutine != null)
-            StopCoroutine(_activeRoutine);
-
-        _activeRoutine = null;
-
-        if (screenRoot != null)
-            screenRoot.SetActive(false);
-
-        ClearCardFocus();
-        _isScreenActive = false;
-
-        // No OnBuffSelected call for skip
-        OnRoguelikeScreenClosed?.Invoke();
+        if (!_isActive) return;
+        _skipRequested = true;
     }
 }
