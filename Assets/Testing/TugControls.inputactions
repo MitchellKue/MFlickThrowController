@@ -1,0 +1,126 @@
+{
+    "version": 1,
+    "name": "TugControls",
+    "maps": [
+        {
+            "name": "Tug",
+            "id": "e9246273-2695-4392-acd1-ade062553059",
+            "actions": [
+                {
+                    "name": "LeftEngineDirection",
+                    "type": "Value",
+                    "id": "600884c6-53b8-4634-8876-8d2832e1f29b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightEngineDirection",
+                    "type": "Value",
+                    "id": "fd4094d3-837f-4a51-9b50-36b66d480dfd",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LeftEngineThrust",
+                    "type": "Value",
+                    "id": "065cfcc7-43e6-4093-aabf-6434e99ef498",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightEngineThrust",
+                    "type": "Value",
+                    "id": "7f3eada0-b583-4b94-bff5-2296cbb2c0d2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "EmergencyStop",
+                    "type": "Button",
+                    "id": "b115fe5e-659f-480d-8b41-503cddb6ad08",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "99c685f4-656d-464e-bc15-ecbd8b557f53",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftEngineDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94ae0c55-2451-43d1-89bd-13afd75e00ea",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftEngineDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13ff046d-6429-42e8-9a05-228db4c5fa05",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightEngineDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f6bd615-b74a-4e63-aa8f-4be8229f5092",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftEngineThrust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b70d3a3-9647-440e-ab37-2f786b072592",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightEngineThrust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2bdbbdfd-5a18-4f7a-a60f-f57d48961bf0",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EmergencyStop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
