@@ -65,7 +65,22 @@ public class Machine_Interaction_Controller : MonoBehaviour
         if (playerMotorModule != null)
         {
             playerMotorModule.canUse = false;
-            
+
+        }
+        else
+        {
+            return false;
+        }
+
+            // Cache and disable player camera controller
+            playerCameraModule = playerGO.GetComponent<CameraRig_FPV>();
+        if (playerCameraModule != null)
+        {
+            playerCameraModule.gameObject.SetActive(false);
+        }
+        else
+        {
+            return false;
         }
 
         // Move player to interaction spot (if defined)
@@ -73,12 +88,9 @@ public class Machine_Interaction_Controller : MonoBehaviour
         {
             playerMotorModule.TeleportToPoint(interactionSpot);
         }
-
-        // Cache and disable player camera controller
-        playerCameraModule = playerGO.GetComponent<CameraRig_FPV>();
-        if (playerCameraModule != null)
+        else
         {
-            playerCameraModule.gameObject.SetActive(false);
+            return false;
         }
 
         isOccupied = true;
@@ -97,6 +109,7 @@ public class Machine_Interaction_Controller : MonoBehaviour
     /// </summary>
     public bool TryRelease()
     {
+        // might not be best to return false here. depending on use case
         if (!isOccupied)
             return false;
 
@@ -128,7 +141,7 @@ public class Machine_Interaction_Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// Convenience: can this machine be interacted with right now?
+    /// can this machine be interacted with right now?
     /// </summary>
     public bool CanInteract()
     {
@@ -137,7 +150,7 @@ public class Machine_Interaction_Controller : MonoBehaviour
 
     /// <summary>
     /// Called when this machine becomes / stops being the closest machine
-    /// to the player. Use this to toggle your canvas.
+    /// to the player. we can use this to toggle the canvas.
     /// </summary>
     public void SetHighlighted(bool isHighlighted)
     {

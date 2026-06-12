@@ -1,0 +1,18 @@
+{
+  "name": "com.mitchellkue.mcharactercontroller",
+  "displayName": "MCharacterController",
+  "version": "0.1.0",
+  "unity": "2022.0",
+  "description": "A small, opinionated character controller for Unity\u2019s kinematic CharacterController.\r\n\r\nDesigned for first-person and third-person style controllers.\r\nBuilt around separation of concerns:\r\nCharacterMotor \u2013 pure movement and physics-ish behavior.\r\nCharacterControllerRoot \u2013 orchestrates input, motor, camera, and abilities.\r\nCharacterAbilityController \u2013 discovers and ticks abilities.\r\nCameraRigBase + CameraRig_FPV \u2013 camera behavior (FPS style).\r\nICcInputSource + NewInputSystem_Source \u2013 input abstraction.\r\nMovementDirectionGizmos / CameraDirectionGizmos \u2013 debug\u2011only visualization.\r\nUses Unity\u2019s New Input System.\r\nTarget engine: Unity 6.0.62 (but should work on recent 2022+ with minor changes).\r\nCurrently tuned for internal use, but code is public on GitHub.\r\nCore abilities layer on top of the motor:\r\n\r\nSprint\r\nJump (with coyote time + jump buffering)\r\nCrouch (FPS-style)\r\nHead bob (FPS-style)\r\nAim Down Sight (ADS) (camera/FOV/sensitivity/offset only)\r\nDash\r\nZipline\r\nClimb (simple teleports + full climb volumes)\r\nExternal forces (knockback, wind, etc.)",
+  "dependencies": {
+    "com.unity.test-framework": "1.6.0"
+  },
+  "author": {
+    "name": "Kojiko",
+    "url": "https://github.com/MitchellKue/MCharacterController",
+    "email": "mitchellkue@gmail.com"
+  },
+  "changelogUrl": "https://github.com/MitchellKue/MCharacterController",
+  "documentationUrl": "https://github.com/MitchellKue/MCharacterController",
+  "licensesUrl": "https://github.com/MitchellKue/MCharacterController"
+}

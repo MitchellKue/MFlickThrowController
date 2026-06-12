@@ -19,11 +19,11 @@ namespace FlickThrowSystem.Core
         public float velocityWindow = 0.08f; // 80ms
 
         [Header("Drag Rules")]
-        public float minDragDistance = 25f;
-        public float maxDragDistance = 600f;
+        public float minDragDistance = 25f; // the minimum distance needed to be a valid throw
+        public float maxDragDistance = 600f;    // the maximum distance for a valwid throw
 
         [Header("Velocity Rules")]
-        public float minReleaseSpeed = 50f;
+        public float minReleaseSpeed = 50f; // the minimum speed required for a valid throw
         public float fallbackForce = 3f;
 
         [Header("Directional Rules")]
@@ -31,7 +31,7 @@ namespace FlickThrowSystem.Core
         public float minForwardDot = 0.5f; // forward bias cone
 
         [Header("Horizontal Deadzones")]
-        public float horizontalDeviationThreshold = 0.05f;
+        public float horizontalDeviationThreshold = 0.05f;  // horizontal input under this ampount wont be calculated 
         public float spinThreshold = 0.05f;
 
         [Header("Power Falloff")]

@@ -71,7 +71,7 @@ public class Machine_Ticket_Controller : MonoBehaviour
     {
         if (Economy_TicketCalculator.Instance == null)
         {
-            Debug.LogWarning("No ProtoTicketCalculator instance found. Cannot generate tickets from score.");
+            Debug.LogWarning("No Ticket Calculator instance found. Cannot generate tickets from score.");
             return;
         }
 

@@ -1,0 +1,10 @@
+{
+    "name": "Mitchellkue.Mcharactercontroller.Editor",
+    "references": [
+      "Mitchellkue.Mcharactercontroller"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

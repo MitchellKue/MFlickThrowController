@@ -8,11 +8,12 @@ public class RoguelikeCardManager : MonoBehaviour
 {
     public static RoguelikeCardManager Instance { get; private set; }
 
+    // might be best to use a dictionary here as we may want to specify the exact buff that is shown to the player, etc.
     [Header("Buff Database")]
     public List<BuffData> allBuffs = new List<BuffData>();
 
     [Header("Screen Root")]
-    [Tooltip("Root object for the roguelike UI. This whole object will be enabled/disabled.")]
+    [Tooltip("Root object for the roguelike UI. This whole object will be enabled/disabled during the buff roll stage.")]
     public GameObject screenRoot;
 
     [Header("Card Setup")]
@@ -157,6 +158,8 @@ public class RoguelikeCardManager : MonoBehaviour
 
     private void SpawnCards()
     {
+        ClearCardFocus(); 
+
         // Only spawn once for MVP; reuse if already present
         if (_spawnedCards.Count > 0)
             return;
@@ -167,19 +170,25 @@ public class RoguelikeCardManager : MonoBehaviour
             return;
         }
 
+        // ensure there arent any existing cards present
         _spawnedCards.Clear();
 
+        // spawn the cards
         for (int i = 0; i < cardCount; i++)
         {
-            var cardInstance = Instantiate(cardPrefab, cardRoot);
-            cardInstance.onClicked = HandleCardClicked;
-            cardInstance.SetFocused(false);
+            var cardInstance = Instantiate(cardPrefab, cardRoot);   // instantiate the card
+            cardInstance.onClicked = HandleCardClicked; // add onClicked listener
+            cardInstance.SetFocused(false); // ensure the card spawned is not focused
             _spawnedCards.Add(cardInstance);
         }
     }
 
+
+    // TODO: refactor to use spawnCards
     private void RollNewBuffsAndBind()
     {
+        ClearCardFocus();
+
         _currentBuffs.Clear();
 
         if (allBuffs == null || allBuffs.Count == 0)
@@ -220,6 +229,10 @@ public class RoguelikeCardManager : MonoBehaviour
 
     // --- UI CALLBACKS ---
 
+    /// <summary>
+    /// called when a card is clicked on by the user
+    /// </summary>
+    /// <param name="view"></param>
     private void HandleCardClicked(RoguelikeCardView view)
     {
         if (!_isActive) return;
@@ -232,6 +245,9 @@ public class RoguelikeCardManager : MonoBehaviour
         // Let the coroutine handle the rest (focus + close)
     }
 
+    /// <summary>
+    /// called when the reroll button is clicked
+    /// </summary>
     private void HandleRerollClicked()
     {
         if (!_isActive) return;
@@ -243,6 +259,9 @@ public class RoguelikeCardManager : MonoBehaviour
         ClearCardFocus();
     }
 
+    /// <summary>
+    /// called when the skip button is clicked
+    /// </summary>
     private void HandleSkipClicked()
     {
         if (!_isActive) return;

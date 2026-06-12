@@ -1,0 +1,11 @@
+{
+    "name": "Mitchellkue.Mcharactercontroller.Tests",
+    "references": [
+        "Mitchellkue.Mcharactercontroller"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

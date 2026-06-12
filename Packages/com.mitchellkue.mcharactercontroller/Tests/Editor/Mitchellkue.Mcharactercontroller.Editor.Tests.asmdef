@@ -1,0 +1,14 @@
+{
+    "name": "Mitchellkue.Mcharactercontroller.Editor.Tests",
+    "references": [
+        "Mitchellkue.Mcharactercontroller.Editor",
+        "Mitchellkue.Mcharactercontroller"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

@@ -11,7 +11,7 @@ using TMPro;
 public class Machine_Session_Controller : MonoBehaviour
 {
     [Header("Turn Settings")]
-    [Tooltip("Maximum number of turns for this context (e.g., per game).")]
+    [Tooltip("Maximum number of turns for this session.")]
     public int maxTurns = 3;
 
     
@@ -70,7 +70,7 @@ public class Machine_Session_Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// Add N turns (can be negative for penalties if you prefer).
+    /// Add N turns can be negative for penalties.
     /// </summary>
     public void AddTurns(int amount)
     {

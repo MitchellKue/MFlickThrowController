@@ -8,29 +8,6 @@ using UnityEngine;
 /// </summary>
 public class Machine_Score_Controller : MonoBehaviour
 {
-    #region AUDIO
-
-    [Header("Score Audio")]
-    [Tooltip("AudioSource used to play score SFX.")]
-    public AudioSource audioSource;
-
-    [Tooltip("Played when score goes up.")]
-    public AudioClip scoreUpSFX;
-
-    [Tooltip("Played when score goes down.")]
-    public AudioClip scoreDownSFX;
-
-    [Tooltip("Played when score is reset.")]
-    public AudioClip scoreResetSFX;
-
-    [Range(0f, 1f)]
-    [Tooltip("Volume for score SFX.")]
-    public float audioVolume = 1f;
-
-    [Tooltip("Random pitch range applied to score SFX (min, max).")]
-    public Vector2 pitchRange = new Vector2(0.95f, 1.05f);
-
-    #endregion
 
     #region SCORE BACKEND
 
@@ -99,7 +76,27 @@ public class Machine_Score_Controller : MonoBehaviour
 
     #endregion
 
-    #region AUDIO HELPERS
+    #region AUDIO
+
+    [Header("Score Audio")]
+    [Tooltip("AudioSource used to play score SFX.")]
+    public AudioSource audioSource;
+
+    [Tooltip("Played when score goes up.")]
+    public AudioClip scoreUpSFX;
+
+    [Tooltip("Played when score goes down.")]
+    public AudioClip scoreDownSFX;
+
+    [Tooltip("Played when score is reset.")]
+    public AudioClip scoreResetSFX;
+
+    [Range(0f, 1f)]
+    [Tooltip("Volume for score SFX.")]
+    public float audioVolume = 1f;
+
+    [Tooltip("Random pitch range applied to score SFX (min, max).")]
+    public Vector2 pitchRange = new Vector2(0.95f, 1.05f);
 
     private void PlayScoreUpSFX()
     {
